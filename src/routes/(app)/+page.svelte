@@ -3,9 +3,25 @@
 
 	export let data: PageData;
 
+	type Industry = {
+		id: number;
+		isPopular: boolean | null;
+		mostCommonServices: number[];
+		name: string;
+		services: {
+			id: number;
+			name: string;
+		}[];
+		synonyms: string[];
+		type: string;
+		wpId: number;
+	};
+
 	$: industries = data?.industries;
 
-	$: popularInustries = data?.industries.filter((industry) => industry?.isPopular === true);
+	$: popularInustries = data?.industries.filter(
+		(industry: Industry) => industry?.isPopular === true
+	);
 
 	let selectedIndustry = '';
 
@@ -15,7 +31,7 @@
 
 	let submitModal = false;
 
-	$: filteredIndustries = industries?.filter((industry) => {
+	$: filteredIndustries = industries?.filter((industry: Industry) => {
 		const lowerSearchKeyword = searchKeyword.toLowerCase();
 
 		if (industry.name.toLowerCase().includes(lowerSearchKeyword)) {
